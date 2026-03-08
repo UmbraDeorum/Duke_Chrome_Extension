@@ -99,4 +99,5 @@ The extension polls the handler for tasks, executes HTTP requests from the brows
 ## Disclaimer
 
 This tool is provided strictly for educational purposes and authorized penetration testing engagements. You are solely responsible for ensuring you have proper authorization before use. The authors assume no liability for misuse.
+
 Placeholder image included during the default generation flow of the extension is not subject to the License attached to this project, and is owned solely by its intellectual property owner and/or publisher. In case of any infringement, it will be removed upon notice.
