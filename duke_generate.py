@@ -1798,7 +1798,6 @@ def handler_loop():
 
     while True:
         try:
-            # Fix #2: drain background messages before showing prompt
             drain_output()
             # Show current victim URL above prompt
             with LOCK:
@@ -1852,7 +1851,6 @@ def handler_loop():
                             f"\n  {GREEN}{BOLD}[+] Preload result: {url}{RESET}\n"
                             f"  {GREEN}[{status}]{RESET} {len(body_bytes)} bytes — use 'save <file>' to retrieve\n"
                         )
-                        # Fix #1: store as (bytes, timestamp) for TTL expiry
                         with LOCK:
                             RESULT_STORE[f'preload_{tid}'] = (body_bytes, time.time())
 
